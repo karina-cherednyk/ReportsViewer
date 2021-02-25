@@ -10,7 +10,6 @@ function App() {
   useEffect(() => {
     const getReports = () => {
         const data = require('./data.json')
-        console.log(data)
         setReports(data)
         setCurrentReport(data[0])
       }

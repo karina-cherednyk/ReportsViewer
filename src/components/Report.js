@@ -8,7 +8,7 @@ import GradesTable from './GradesTable';
 const useStyles = makeStyles((theme) => ({
     body: {
         margin: theme.spacing(5),
-        padding: theme.spacing(5),
+        padding: theme.spacing(3),
         border: `5px solid ${theme.palette.secondary.dark}`,
         textAlign: 'center'
     }
@@ -21,9 +21,10 @@ const monthes = [
   'червня', 'липня', 'серпня'
 ]
 
-const createOptions = ({ label, opt }) => {
+const createOptions = ({ label, value, opt }) => {
     return (
         <Autocomplete
+        value={value}
         key={`opt-${++count}`}
         options={opt}
         style={{padding: 3, width: "12em"}}
@@ -34,8 +35,9 @@ const createOptions = ({ label, opt }) => {
 
 const row = (elems) => <Box key={`row-${++count}`} display="flex"  flexDirection="row">{elems}</Box>
 const label = (text) => <Typography variant="h5"  key={++count} > {text} </Typography>
-const tf = (text, other={}) =>  
-  <TextField  key={`tf-${++count}`} margin="dense" style={{padding: 3}} 
+const tf = (text, defVal, other={}) =>  
+  <TextField  key={`tf-${++count}`} defaultValue={defVal}
+   margin="dense" style={{padding: 3}} 
    label={text} variant="outlined" {...other} />
 
 let count = 0;
@@ -46,36 +48,36 @@ const Report = ({ report }) => {
     return (
         <Paper elevation={5} className={c.body}>
           { label("НАЦІОНАЛЬНИЙ УНІВЕРСИТЕТ “КИЄВО-МОГИЛЯНСЬКА АКАДЕМІЯ”") }
-          { label("ЗАЛІКОВО-ЕКЗАМЕНАЦІЙНА ВІДОМІСТЬ №")  }
-          { row([ createOptions({ label: "Освітній рівень", opt: ['Бакалавр', 'Магістр'] })]) }
+          { label(`ЗАЛІКОВО-ЕКЗАМЕНАЦІЙНА ВІДОМІСТЬ № ${report.sheetCode}`)  }
+          { row([ createOptions({ label: "Освітній рівень", value: report.okr, opt: ['Бакалавр', 'Магістр'] })]) }
           {
           row([
-                createOptions({ label: "Факультет", opt: ['Інформатики', 'Фізики'] }),
-                createOptions({ label: "Рік навчання", opt: ['1', '2', '3', '4', '5', '6'] }) ,
-                tf('Група')
+                createOptions({ label: "Факультет", value: report.faculty, opt: ['інформатики', 'фізики'] }),
+                createOptions({ label: "Рік навчання", value: report.eduYear, opt: ['1', '2', '3', '4', '5', '6'] }) ,
+                tf('Група', report.group)
           ])
           }
-          { row( [ tf("Дисципліна")] ) }
+          { row( [ tf("Дисципліна", report.subject)] ) }
           {
           row([
-                createOptions({ label: "Семестр", opt: ['1', '2', '3', '4'] }),
-                tf('Залікові бали', {type:'number'})
+                createOptions({ label: "Семестр", value: report.term, opt: ['1', '2', '3', '4'] }),
+                tf('Залікові бали', report.creditPoints, {type:'number'})
           ]) 
          }
           {
           row([
-                createOptions({ label: "Форма контрлю", opt: ['залік', 'іспит'] }),
+                createOptions({ label: "Форма контролю", value: report.controlForm, opt: ['залік', 'іспит'] }),
                 row([
-                      tf('День', {type: 'number' }),
-                      createOptions({label: "Місяць", opt: monthes }), 
-                      tf('Рік', { type: 'number' })
+                      tf('День', report.date.day, {type: 'number' }),
+                      createOptions({label: "Місяць", value: report.date.month, opt: monthes }), 
+                      tf('Рік', report.date.year, { type: 'number' })
                 ])
           ])
         } 
         { 
         row([
-          tf('Прізвище, ім’я, по батькові екзаменатора', {fullWidth: true}),
-          tf('Вчене звання', { fullWidth: true})
+          tf('Прізвище, ім’я, по батькові екзаменатора', report.teacherName, {fullWidth: true}),
+          tf('Вчене звання', report.teacherRank.join(', '),  { fullWidth: true})
         ])
         }  
         <GradesTable  report={report} />
