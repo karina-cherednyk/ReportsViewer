@@ -1,0 +1,111 @@
+[{
+    "fileName": "Бакалаври_Залік",
+    "sheetType": "Заліково-екзаменаційна відомість",
+    "sheetCode": "1265539",
+    "okr": "Бакалавр",
+    "faculty": "інформатики",
+    "eduYear": "2",
+    "group": "21",
+    "subject": "Теорія кодування",
+    "term": "4",
+    "creditPoints": 4,
+    "controlForm": "залік",
+    "date": {
+        "day": 23,
+        "month": "квітня",
+        "year": 2016
+    },
+    "teacherName": "Коваленко Петро Олександрович",
+    "teacherRank": ["кандидат фізико-математичних наук", "доцент"],
+    "data": [
+        {
+            "ordinal": 1,
+            "name": "Бебешко Євген Ростиславович",
+            "bookNo": "І 011/14 бп",
+            "termGrade": 40,
+            "examGrade": 42,
+            "sum": 82,
+            "sumIsCorrect": false,
+            "nationalGrade": "Зараховано",
+            "nationalGradeIsCorrect": "false",
+            "ectsGrade": "B",
+            "ectsGradeIsCorrect": false
+        },
+        {
+            "ordinal": 2,
+            "name": "Булавко Михайло Вікторович",
+            "bookNo": "І 026/14 бп",
+            "termGrade": 41,
+            "examGrade": 40,
+            "sum": 81,
+            "sumIsCorrect": false,
+            "nationalGrade": "Зараховано",
+            "nationalGradeIsCorrect": "false",
+            "ectsGrade": "B",
+            "ectsGradeIsCorrect": false
+        }
+    ],
+    "presentStudents": 10,
+    "presentStudentsIsCorrect": false,
+    "missingStudents": 0,
+    "missingStudentsIsCorrect": false,
+    "bannedStudents": 0,
+    "bannedStudentsIsCorrect": false,
+    "dean": "Глибовець Андрій Миколайович"
+},
+{
+    "fileName": "Бакалаври_Іспит",
+    "sheetType": "Заліково-екзаменаційна відомість",
+    "sheetCode": "1265539",
+    "okr": "Бакалавр",
+    "faculty": "інформатики",
+    "eduYear": "2",
+    "group": "21",
+    "subject": "Теорія кодування",
+    "term": "4",
+    "creditPoints": 4,
+    "controlForm": "залік",
+    "date": {
+        "day": 23,
+        "month": "квітня",
+        "year": 2016
+    },
+    "teacherName": "Коваленко Петро Олександрович",
+    "teacherRank": ["кандидат фізико-математичних наук", "доцент"],
+    "data": [
+        {
+            "ordinal": 1,
+            "name": "Бебешко Євген Ростиславович",
+            "bookNo": "І 011/14 бп",
+            "termGrade": 40,
+            "examGrade": 42,
+            "sum": 82,
+            "sumIsCorrect": false,
+            "nationalGrade": "Зараховано",
+            "nationalGradeIsCorrect": "false",
+            "ectsGrade": "B",
+            "ectsGradeIsCorrect": false
+        },
+        {
+            "ordinal": 2,
+            "name": "Булавко Михайло Вікторович",
+            "bookNo": "І 026/14 бп",
+            "termGrade": 41,
+            "examGrade": 40,
+            "sum": 81,
+            "sumIsCorrect": false,
+            "nationalGrade": "Зараховано",
+            "nationalGradeIsCorrect": "false",
+            "ectsGrade": "B",
+            "ectsGradeIsCorrect": false
+        }
+    ],
+    "presentStudents": 10,
+    "presentStudentsIsCorrect": false,
+    "missingStudents": 0,
+    "missingStudentsIsCorrect": false,
+    "bannedStudents": 0,
+    "bannedStudentsIsCorrect": false,
+    "dean": "Глибовець Андрій Миколайович"
+}
+]

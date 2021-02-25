@@ -1,0 +1,34 @@
+[
+    {
+        "name": "№",
+        "prop": "ordinal"
+    },
+    {
+        "name": " Прізвище,ім`я,по_батькові_студента",
+        "prop": "name"
+    },
+    {
+        "name": "№_залікової книжки",
+        "prop": "bookNo"
+    },
+    {
+        "name": "За роботу в трим",
+        "prop": "termGrade"
+    },
+    {
+        "name": "За тезу, залік, екзамен",
+        "prop": "examGrade"
+    },
+    {
+        "name": "Разом",
+        "prop": "sum"
+    },
+    {
+        "name": "Національна оцінка",
+        "prop": "nationalGrade"
+    },
+    {
+        "name": "Оцінка ЄКТС",
+        "prop": "ectsGrade"
+    }
+    ]

@@ -2,40 +2,7 @@ import { Table, TableBody,
     TableHead, TableCell, TableRow } from '@material-ui/core';
 
 
-const headers = [
-    {
-        name: "N",
-        prop: "ordinal"
-    },
-    {
-        name: "pib",
-        prop: "name"
-    },
-    {
-        name: "N zalikovoi knygi",
-        prop: "bookNo"
-    },
-    {
-        name: "Robota v trymi",
-        prop: "termGrade"
-    },
-    {
-        name: "Za tezu / zalik/ ekzamen",
-        prop: "examGrade"
-    },
-    {
-        name: "Razom",
-        prop: "sum"
-    },
-    {
-        name: "National grade",
-        prop: "nationalGrade"
-    },
-    {
-        name: "ECTS grade",
-        prop: "ectsGrade"
-    }
-    ]
+
 
 const row = (x,i,headers) => 
     <TableRow key={`tr-${i}`}>
@@ -44,9 +11,8 @@ const row = (x,i,headers) =>
     ) }
     </TableRow>
  
-const data = [] 
-
-const GradesTable = () => {
+const headers = require('./headers.json')
+const GradesTable = ({report}) => {
     return (
         <Table>
         <TableHead><TableRow>{
@@ -58,7 +24,7 @@ const GradesTable = () => {
         } 
         </TableRow></TableHead>
         <TableBody>
-        { data.map((x,i) => row(x, i, headers) )  }
+        { report.data.map((x,i) => row(x, i, headers) )  }
         </TableBody>
         </Table>
     )

@@ -6,26 +6,24 @@ import Tab from '@material-ui/core/Tab';
 import Report from './Report'
 
 function TabPanel(props) {
-  const { child, value, i, ...other } = props;
+  const { child, currentReport, report, ...other } = props;
   return (
     <div
       role="tabpanel"
-      hidden={value !== i}
-      id={`vertical-tabpanel-${i}`}
-      aria-labelledby={`vertical-tab-${i}`}
+      hidden={currentReport.fileName !== report.fileName}
+      id={`tabpanel-${report.fileName}`}
+      aria-labelledby={`tab-${report.fileName}`}
       {...other}
     >
-      {value === i && (
-        child
-      )}
+      { currentReport.fileName === report.fileName && (child)}
     </div>
   );
 }
 
 TabPanel.propTypes = {
   child: PropTypes.node,
-  i: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
+  report: PropTypes.any.isRequired,
+  currentReport: PropTypes.any.isRequired,
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -40,23 +38,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const fileTabs = (value, handleChange, files) => {
+const fileTabs = (currentReport, handleChange, reports) => {
     let fileComponents = []
-    for(let i in files){
+    for(let i in reports){
+      let fn = reports[i].fileName;
         fileComponents.push(
             <Tab 
-            label={files[i]}      
-            key={  `vtab-${i}`}
-            id={`vertical-tab-${i}`}
-            aria-controls={`vertical-tabpanel-${i}`}
+            label={fn}      
+            key={  `vtab-${fn}`}
+            id={`tab-${fn}`}
+            aria-controls={`tabpanel-${fn}`}
             />
         )
     }
     return  <Tabs 
-                width="10%"
+                width="20%"
                 orientation="vertical"
                 variant="scrollable"
-                value={value}
+                value={0}
                 onChange={handleChange}
                 scrollButtons="on"
                 indicatorColor="primary"
@@ -64,19 +63,30 @@ const fileTabs = (value, handleChange, files) => {
                 >{ fileComponents }</Tabs>
 }
 
-const files = [
-    'file1'
-]
-export default function VerticalTab() {
-  const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+const addTabPanels = (currentReport, reports) => {
+  let reportTabPanels = []
+  for(let i in reports){
+    reportTabPanels.push(
+      <TabPanel key={`rep-tabpan-${i}`} currentReport={currentReport} report={reports[i]} child={<Report report={reports[i]} />} />
+    )
+  }
+  return <> { reportTabPanels } </>
+}
 
-  const handleChange = (event, newValue) =>  setValue(newValue);
+const VerticalTab = ({reports, currentReport, setCurrentReport}) => {
+  const classes = useStyles();
+
+  const handleChange = (event, i) => {
+    setCurrentReport(reports[i]);
+  };
 
   return (
     <div className={classes.root}>
-      { fileTabs(value, handleChange, files) }
-      <TabPanel  value={value} i={0} child={<Report/>} />
+      { fileTabs(currentReport, handleChange, reports) }
+      { addTabPanels(currentReport, reports) }
+      
     </div>
   );
 }
+
+export default VerticalTab;
