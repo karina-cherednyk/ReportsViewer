@@ -52,7 +52,7 @@ const fileTabs = (currentReport, handleChange, reports) => {
         )
     }
     return  <Tabs 
-                width="20%"
+                width="30%"
                 orientation="vertical"
                 variant="scrollable"
                 value={0}

@@ -46,7 +46,7 @@ const Header = ({currentReport}) => {
             <input type="file" className={c.fileButton} /></label>
             <Typography variant="h6" className={c.f1} > {currentReport}  </Typography>
             <Button className={c.button} variant="contained" >Перевірити відомість</Button>
-            <Button className={c.button} variant="contained" >Роздрукувати форму</Button>
+            <Button className={c.button} variant="contained" >Зберегти PDF</Button>
             </Toolbar>
         </AppBar>
     )
