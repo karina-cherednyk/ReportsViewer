@@ -43,7 +43,10 @@ const tf = (text, defVal, other={}) =>
 let count = 0;
 
 
-const Report = ({ report }) => {
+const Report = ({ 
+        report,
+        ...tableMethods
+       }) => {
     const c = useStyles()
     return (
         <Paper elevation={5} className={c.body}>
@@ -80,7 +83,7 @@ const Report = ({ report }) => {
           tf('Вчене звання', report.teacherRank.join(', '),  { fullWidth: true})
         ])
         }  
-        <GradesTable  report={report} />
+        <GradesTable  report={report} {...tableMethods} />
 
         </Paper>
     )

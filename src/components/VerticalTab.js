@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const fileTabs = (currentReport, handleChange, reports) => {
+const fileTabs = (currentReport, handleTabChange, reports) => {
     let fileComponents = []
     for(let i in reports){
       let fn = reports[i].fileName;
@@ -56,35 +56,37 @@ const fileTabs = (currentReport, handleChange, reports) => {
                 orientation="vertical"
                 variant="scrollable"
                 value={0}
-                onChange={handleChange}
+                onChange={handleTabChange}
                 scrollButtons="on"
                 indicatorColor="primary"
                 textColor="secondary"
                 >{ fileComponents }</Tabs>
 }
 
-const addTabPanels = (currentReport, reports) => {
-  let reportTabPanels = []
-  for(let i in reports){
-    reportTabPanels.push(
-      <TabPanel key={`rep-tabpan-${i}`} currentReport={currentReport} report={reports[i]} child={<Report report={reports[i]} />} />
-    )
-  }
-  return <> { reportTabPanels } </>
-}
-
-const VerticalTab = ({reports, currentReport, setCurrentReport}) => {
+const VerticalTab = ({
+        reports, 
+        currentReport, 
+        setCurrentReport,
+        ...tableMethods
+      }) => {
   const classes = useStyles();
 
-  const handleChange = (event, i) => {
+  const handleTabChange = (event, i) => {
     setCurrentReport(reports[i]);
   };
 
   return (
     <div className={classes.root}>
-      { fileTabs(currentReport, handleChange, reports) }
-      { addTabPanels(currentReport, reports) }
-      
+      { fileTabs(currentReport, handleTabChange, reports) }
+      { 
+        reports.map((x,i) => 
+          <TabPanel key={`rep-tabpan-${i}`} currentReport={currentReport} report={x} 
+          child={
+          <Report report={x} {...tableMethods} />
+            } />
+        )      
+      }
+
     </div>
   );
 }

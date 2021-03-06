@@ -1,18 +1,40 @@
-import { Table, TableBody, 
-    TableHead, TableCell, TableRow } from '@material-ui/core';
+import { Table, TableBody, TableHead, TableCell, TableRow, TextField } from '@material-ui/core';
+import  EditIcon  from '@material-ui/icons/Edit'
+import  CheckIcon  from '@material-ui/icons/Check'
 
 
+const row = (x,i,headers, report, startEditing, stopEditing, editData, handleChange) => {
+    const editing = editData.row === i && editData.fileName === report.fileName
 
-
-const row = (x,i,headers) => 
-    <TableRow key={`tr-${i}`}>
-    { headers.map((y,k) => 
-        <TableCell key={`trc-${k}`}>{x[y.prop]}</TableCell>
-    ) }
-    </TableRow>
+    return (
+        <TableRow key={`tr-${i}`}>
+        { headers.map((y,k) => 
+            <TableCell key={`trc-${k}`}>
+                { editing ?
+                (<TextField 
+                    name={y.prop}
+                    onChange={ e => handleChange(i, y.prop, e)}
+                    value={x[y.prop]}
+                />) :
+                ( x[y.prop] )
+                }
+                </TableCell>
+        ) }
+        <TableCell>
+            { editing ? (<CheckIcon onClick={() => stopEditing()}/>): (<EditIcon onClick={() => startEditing(i)}/>) }
+        </TableCell>
+        </TableRow>
+    )
+}
  
 const headers = require('./headers.json')
-const GradesTable = ({report}) => {
+const GradesTable = ({
+            report,
+            startEditing,
+            stopEditing,
+            editData,
+            handleChange
+        }) => {
     return (
         <Table>
         <TableHead><TableRow>{
@@ -24,7 +46,7 @@ const GradesTable = ({report}) => {
         } 
         </TableRow></TableHead>
         <TableBody>
-        { report.data.map((x,i) => row(x, i, headers) )  }
+        { report.data.map((x,i) => row(x, i, headers, report, startEditing, stopEditing, editData, handleChange) )  }
         </TableBody>
         </Table>
     )
