@@ -5,45 +5,49 @@ import { useState } from 'react'
 
 function App() {
   const [reports, setReports] = useState([])
-  const [currentReport, setCurrentReport] = useState({})
+  const [currentReportName, setCurrentReportName] = useState("")
   const [editData, setEditData] = useState({})
 
   function addReports(newreports) {
     const prevLen = reports.length
     setReports([...reports, ...newreports])
     if(prevLen === 0)
-      setCurrentReport(newreports[0])
+      setCurrentReportName(newreports[0].fileName)
   }
 
 
   function startEditing(row) {
-    setEditData({row: row, fileName:currentReport.fileName})
+    setEditData({row: row, fileName:currentReportName})
   }
   function stopEditing(){
     setEditData({})
   }
   function handleChange(row, col, e){
     const { value } = e.target 
-    console.log('row '+row+', col '+col+', val '+value)
-    console.log(currentReport)
-    setCurrentReport({
-      ...currentReport,
-      data: currentReport.data.map( (rowVals, i) => 
-          (i === row ? {...rowVals, [col]: value }: rowVals )
-        )
+    // setCurrentReport({
+    //   ...currentReport,
+    //   data: currentReport.data.map( (rowVals, i) => 
+    //       (i === row ? {...rowVals, [col]: value }: rowVals )
+    //     )
+    // })
+    const res = reports.map( r => r.fileName !== currentReportName ? r : {
+      ...r, data: r.data.map( (rowVals, rowI) => rowI !== row ? rowVals : {
+        ...rowVals, [col]:value
+      })
     })
+    setReports(res)
   }
 
   return (
     <div className="App">
       <Header 
-          currentReport={currentReport.fileName} 
+          currentReport={currentReportName} 
           addReports={addReports}
           />
       <VerticalTab 
           reports={reports} 
-          currentReport={currentReport} 
-          setCurrentReport={setCurrentReport}
+          currentReportName={currentReportName} 
+          setCurrentReportName={setCurrentReportName}
           startEditing={startEditing}
           stopEditing={stopEditing}
           editData={editData}
