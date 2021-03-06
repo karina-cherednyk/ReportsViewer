@@ -1,34 +1,30 @@
 import './App.css'
 import Header from './components/Header'
 import VerticalTab from './components/VerticalTab'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 function App() {
   const [reports, setReports] = useState([])
   const [currentReport, setCurrentReport] = useState({})
 
-  useEffect(() => {
-    const getReports = () => {
-        const data = require('./data.json')
-        setReports(data)
-        setCurrentReport(data[0])
-      }
-    
-    getReports()
+  function addReports(newreports) {
+    const prevLen = reports.length
+    setReports([...reports, ...newreports])
+    if(prevLen === 0)
+      setCurrentReport(newreports[0])
 
-  }, [])
-
-
-  const replaceReport = async(reportData) => {
-    const res = await fetch('/.data.json')
-    const data = await res.json()
-    return data
   }
 
   return (
     <div className="App">
-      <Header currentReport={currentReport.fileName} />
-      <VerticalTab reports={reports} currentReport={currentReport} setCurrentReport={setCurrentReport}/>
+      <Header 
+          currentReport={currentReport.fileName} 
+          addReports={addReports}
+          />
+      <VerticalTab 
+          reports={reports} 
+          currentReport={currentReport} 
+          setCurrentReport={setCurrentReport}/>
     </div>
     
   );

@@ -60,13 +60,13 @@ const Report = ({ report }) => {
           { row( [ tf("Дисципліна", report.subject)] ) }
           {
           row([
-                createOptions({ label: "Семестр", value: report.term, opt: ['1', '2', '3', '4'] }),
+                createOptions({ label: "Семестр", value: report.term, opt: ['1', '2', '3', '4', '4д'] }),
                 tf('Залікові бали', report.creditPoints, {type:'number'})
           ]) 
          }
           {
           row([
-                createOptions({ label: "Форма контролю", value: report.controlForm, opt: ['залік', 'іспит'] }),
+                createOptions({ label: "Форма контролю", value: report.controlForm, opt: ['залік', 'іспит','екзамен'] }),
                 row([
                       tf('День', report.date.day, {type: 'number' }),
                       createOptions({label: "Місяць", value: report.date.month, opt: monthes }), 

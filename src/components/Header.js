@@ -33,8 +33,37 @@ const useStyles = makeStyles((theme) => ({
 
 
 // rafce 
-const Header = ({currentReport}) => {
+const Header = ({currentReport, addReports}) => {
     const c = useStyles();
+
+    function loadReports(files){ 
+        let reports = []
+        Array.from(files).forEach(async (file) => {
+            let data = new FormData()
+            data.append('pdfInput', file)
+
+            let requestOptions = {
+                mode: 'cors',
+                creadentials: 'include',
+                method: 'POST',
+                body: data
+            }
+            let report = await fetch("http://localhost:8080/parse", requestOptions).then( r => r.json())
+            let dateOld = report.date.split(',')
+            report.date = {
+                day: parseInt(dateOld[0]), 
+                month: 'квітня',
+                year: parseInt(dateOld[2])
+            }
+            report.faculty = report.faculty.split(' ')[1]
+            report.eduYear = report.eduYear+''
+            reports.push(report)
+            if(reports.length === files.length)
+                addReports(reports)
+        } )
+        
+    }
+    
     return (
         <AppBar position="static">
             <Toolbar variant="dense">
@@ -43,7 +72,7 @@ const Header = ({currentReport}) => {
             </IconButton>
             <label className={`MuiTypography-h6 ${c.f1} ${c.fileLabel}`}>
             Завантажити відомості
-            <input type="file" className={c.fileButton} /></label>
+            <input id="input" type="file" className={c.fileButton} onChange={(e) => loadReports(e.target.files)} multiple accept=".pdf" /></label>
             <Typography variant="h6" className={c.f1} > {currentReport}  </Typography>
             <Button className={c.button} variant="contained" >Перевірити відомість</Button>
             <Button className={c.button} variant="contained" >Зберегти PDF</Button>
