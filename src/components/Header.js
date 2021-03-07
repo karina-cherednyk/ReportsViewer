@@ -49,13 +49,16 @@ const Header = ({currentReport, addReports}) => {
                 body: data
             }
             let report = await fetch("http://localhost:8080/parse", requestOptions).then( r => r.json())
-            let dateOld = report.date.split(',')
             report.date = {
-                day: parseInt(dateOld[0]), 
+                day: 1,
+                dayError: null,
                 month: 'квітня',
-                year: parseInt(dateOld[2])
+                monthError: null, 
+                year: 2020,
+                yearError: null
             }
-            report.eduYear = report.eduYear+''
+            report.eduYear = report.eduYear +''
+            console.log(report)
             reports.push(report)
             if(reports.length === files.length)
                 addReports(reports)

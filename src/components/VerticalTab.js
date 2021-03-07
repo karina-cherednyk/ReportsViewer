@@ -46,20 +46,26 @@ const VerticalTab = ({
         stopEditRow,
         ...reportMethods
       }) => {
-  const classes = useStyles();
+
+
+
+  const c = useStyles();
 
   const handleTabChange = (event, i) => {
     stopEditRow()
+    setTabId(i)
     setCurrentReportName(reports[i].fileName);
   };
+  const [tabId, setTabId] = React.useState(0);
 
   return (
-    <div className={classes.root}>
+    <div className={c.root}>
       <Tabs 
         width="30%"
         orientation="vertical"
         variant="scrollable"
-        value={0}
+        value={tabId}
+        style={{height: 'fit-content'}}
         onChange={handleTabChange}
         scrollButtons="on"
         indicatorColor="primary"

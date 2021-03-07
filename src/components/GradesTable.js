@@ -6,6 +6,8 @@ import  CheckIcon  from '@material-ui/icons/Check'
 const row = ({x,i,headers, report, startEditRow, stopEditRow, editData, studentRowChange}) => {
     const editing = editData && editData.row === i && editData.fileName === report.fileName
 
+    const labelStyle = (error) => error ? {color: 'red'} : {}
+
     return (
         <TableRow key={`tr-${i}`}>
         { headers.map((y,k) => 
@@ -13,13 +15,16 @@ const row = ({x,i,headers, report, startEditRow, stopEditRow, editData, studentR
                 { k !== 0 && editing ?
                 (<TextField 
                     name={y.prop}
+                    style={ y.prop === 'name' ? {width: '20vw'} : {} }
                     onChange={ e => {
                         studentRowChange(i, y.prop, e.target.value)
                         e.target.style.color='darkolivegreen'
                     }}
                     value={editData.rowData[y.prop]}
                 />) :
-                    (  <Typography variant="overline" >{ x[y.prop] } </Typography> )
+                    (  <Typography variant="overline" 
+                            style={labelStyle(x[y.error])}
+                            >{ x[y.prop] } </Typography> )
                 }
                 </TableCell>
         ) }

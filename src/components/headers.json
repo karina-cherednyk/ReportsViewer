@@ -1,34 +1,42 @@
 [
     {
         "name": "№",
-        "prop": "ordinal"
+        "prop": "ordinal",
+        "error": null
     },
     {
         "name": " Прізвище,ім`я,по_батькові_студента",
-        "prop": "name"
+        "prop": "name",
+        "error":"nameError"
     },
     {
         "name": "№_залікової книжки",
-        "prop": "bookNo"
+        "prop": "bookNo",
+        "error": "bookNoError"
     },
     {
         "name": "За роботу в трим",
-        "prop": "termGrade"
+        "prop": "termGrade",
+        "error": "termGradeError"
     },
     {
         "name": "За тезу, залік, екзамен",
-        "prop": "examGrade"
+        "prop": "examGrade",
+        "error": "examGradeError"
     },
     {
         "name": "Разом",
-        "prop": "sum"
+        "prop": "sum",
+        "error": "sumIsCorrect"
     },
     {
         "name": "Національна оцінка",
-        "prop": "nationalGrade"
+        "prop": "nationalGrade",
+        "error": "nationalGradeIsCorrect"
     },
     {
         "name": "Оцінка ЄКТС",
-        "prop": "ectsGrade"
+        "prop": "ectsGrade",
+        "error": "ectsGradeIsCorrect"
     }
     ]

@@ -10,7 +10,7 @@ const monthes = [
 
 const Report = React.memo(({ report, reportRowChange }) => {
 
-      const row = (elems) => <Box key={`row-${++count}`} display="flex"  flexDirection="row">{elems}</Box>
+      const row = (elems) => <Box key={`row-${++count}`} display="flex"  flexDirection="row">{elems.filter(x => x !== null)}</Box>
       const label = (text, error) => <Typography variant="h5"  key={++count} > {text} </Typography>
       
       const options = ({ label, value, error, model }) => {
@@ -41,8 +41,9 @@ const Report = React.memo(({ report, reportRowChange }) => {
             <TextField  
             error={error !== null }
             helperText={error}
+            size='small'
             key={`tf-${++count}`} 
-            defaultValue={defVal}
+            defaultValue={defVal || ''}
             onChange={ e => {
                   reportRowChange(label, e.target.value)
                   e.target.style.color='darkolivegreen'
@@ -60,7 +61,7 @@ const Report = React.memo(({ report, reportRowChange }) => {
     return (
         <>
           { label("НАЦІОНАЛЬНИЙ УНІВЕРСИТЕТ “КИЄВО-МОГИЛЯНСЬКА АКАДЕМІЯ”") }
-          { label(`ЗАЛІКОВО-ЕКЗАМЕНАЦІЙНА ВІДОМІСТЬ № ${report.sheetCode}`, report.sheetCodeError )  }
+          { label(`${report.sheetType} № ${report.sheetCode}`, report.sheetCodeError )  }
           { row([ options({ label: "Освітній рівень", 
                           value: report.okr, 
                           error: report.okrError, 
@@ -77,7 +78,7 @@ const Report = React.memo(({ report, reportRowChange }) => {
                           error: report.eduYearError,
                           model: ['1', '2', '3', '4', '5', '6'] }) ,
 
-                tf({label: 'Група', defVal: report.group, erro: report.groupError})
+                tf({label: 'Група', defVal: report.group, error: report.groupError})
           ])
           }
           { row( [ tf({ label: "Дисципліна", 
@@ -89,13 +90,30 @@ const Report = React.memo(({ report, reportRowChange }) => {
                 options({ label: "Семестр", 
                           value: report.term, 
                           error: report.termError,
-                          model: ['1', '2', '3', '4', '4д'] }),
+                          model: ['1', '2', '3', '4', '4д', '5', '6'] }),
 
                 tf({ label: 'Залікові бали', 
                      defVal: report.creditPoints, 
                      error: report.creditPointsError, 
-                     other: {type:'number'}})
+                     other: {type:'number'}}),
+                     
+                  ( report.group === 'бігунець' ? 
+                  tf({ label: 'Направлення дійсне до', 
+                  defVal: report.expires, 
+                  error: report.expiresError}) : null )
+                  
           ]) 
+         }
+         {
+              row([
+              tf({
+                     label: 'Причина перенесення',
+                     defVal: report.cause,
+                     error: report.causeError,
+                     other: { style: {
+                           display: (report.group === 'бігунець' ?  'inline-flex' : 'none')
+                      } }
+               })])
          }
           {
           row([
@@ -106,18 +124,22 @@ const Report = React.memo(({ report, reportRowChange }) => {
                 row([
                       tf({  label: 'День', 
                             defVal: report.date.day, 
-                            error: report.dateError,
-                            other: {type: 'number' }}),
+                            error: report.date.dayError,
+                            other: {type: 'number',
+                            InputProps:{ inputProps: { min: 0, max: 31 } }
+                        }}),
 
                       options({ label: "Місяць", 
                                 value: report.date.month, 
-                                error: report.dateError,
+                                error: report.date.monthError,
                                 model: monthes }), 
 
                       tf({ label: 'Рік', 
                            defVal: report.date.year, 
-                           error: report.dateError,
-                           other: { type: 'number' }})
+                           error: report.date.yearError,
+                           other: { type: 'number',
+                           InputProps:{ inputProps: { min: 2020 } }
+                        }})
                 ])
           ])
         } 
