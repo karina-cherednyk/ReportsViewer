@@ -15,33 +15,45 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const monthes = [
-  'грудня', 'січня', 'лютого', 
-  'березня', 'квітня', 'травня',
-  'червня', 'липня', 'серпня'
-]
-
-const createOptions = ({ label, value, opt }) => {
-    return (
-        <Autocomplete
-        value={value}
-        key={`opt-${++count}`}
-        options={opt}
-        style={{padding: 3, width: "12em"}}
-        renderInput={(params) => <TextField {...params} margin='dense' label={label} variant="outlined" />}
-        />
-    )
-}
-
 const row = (elems) => <Box key={`row-${++count}`} display="flex"  flexDirection="row">{elems}</Box>
-const label = (text) => <Typography variant="h5"  key={++count} > {text} </Typography>
-const tf = (text, defVal, other={}) =>  
-  <TextField  key={`tf-${++count}`} defaultValue={defVal}
-   margin="dense" style={{padding: 3}} 
-   label={text} variant="outlined" {...other} />
 
+const createComponent = (report, {type, label, valueFrom,  model, other}) => {
+  if(type === 'label') 
+    return <Typography 
+           variant="h5"  
+           key={++count} 
+           {...other}> {label} </Typography>
+
+  if(type === 'input')
+    return <TextField 
+           defaultValue={report[valueFrom]} 
+           key={++count}
+           label={label} 
+           margin="dense" style={{padding: 3}} 
+           {...other} />
+
+  if(type === 'options')
+        return (
+          <Autocomplete
+          value={report[valueFrom]}
+          key={++count}
+          options={model}
+          style={{padding: 3, width: "12em"}}
+          {...other}
+          renderInput={(params) => <TextField {...params} margin='dense' label={label} variant="outlined" />}
+          />
+      )
+}
+const createSchema = (report, x) => {
+  if(Array.isArray(x)){
+    const children = x.map( y => createSchema(report, y))
+    return row(children)
+  }
+  else return createComponent(report, x)
+}
 let count = 0;
 
+const schema = require('./reportHeader.json')
 
 const Report = ({ 
         report,
@@ -50,39 +62,7 @@ const Report = ({
     const c = useStyles()
     return (
         <Paper elevation={5} className={c.body}>
-          { label("НАЦІОНАЛЬНИЙ УНІВЕРСИТЕТ “КИЄВО-МОГИЛЯНСЬКА АКАДЕМІЯ”") }
-          { label(`ЗАЛІКОВО-ЕКЗАМЕНАЦІЙНА ВІДОМІСТЬ № ${report.sheetCode}`)  }
-          { row([ createOptions({ label: "Освітній рівень", value: report.okr, opt: ['Бакалавр', 'Магістр'] })]) }
-          {
-          row([
-                createOptions({ label: "Факультет", value: report.faculty, opt: ['інформатики', 'фізики'] }),
-                createOptions({ label: "Рік навчання", value: report.eduYear, opt: ['1', '2', '3', '4', '5', '6'] }) ,
-                tf('Група', report.group)
-          ])
-          }
-          { row( [ tf("Дисципліна", report.subject)] ) }
-          {
-          row([
-                createOptions({ label: "Семестр", value: report.term, opt: ['1', '2', '3', '4', '4д'] }),
-                tf('Залікові бали', report.creditPoints, {type:'number'})
-          ]) 
-         }
-          {
-          row([
-                createOptions({ label: "Форма контролю", value: report.controlForm, opt: ['залік', 'іспит','екзамен'] }),
-                row([
-                      tf('День', report.date.day, {type: 'number' }),
-                      createOptions({label: "Місяць", value: report.date.month, opt: monthes }), 
-                      tf('Рік', report.date.year, { type: 'number' })
-                ])
-          ])
-        } 
-        { 
-        row([
-          tf('Прізвище, ім’я, по батькові екзаменатора', report.teacherName, {fullWidth: true}),
-          tf('Вчене звання', report.teacherRank.join(', '),  { fullWidth: true})
-        ])
-        }  
+        { createSchema(report, schema) }  
         <GradesTable  report={report} {...tableMethods} />
 
         </Paper>
