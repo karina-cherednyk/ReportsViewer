@@ -36,7 +36,7 @@ const TabPanel = ({ child, currentReportName, report, ...other }) => {
 TabPanel.propTypes = {
   child: PropTypes.node,
   report: PropTypes.any.isRequired,
-  currentReport: PropTypes.any.isRequired,
+  currentReportName: PropTypes.string.isRequired,
 };
 
 const VerticalTab = ({

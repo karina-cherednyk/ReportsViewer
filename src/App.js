@@ -10,6 +10,7 @@ function App() {
 
   function addReports(newreports) {
     const prevLen = reports.length
+    console.log(newreports)
     setReports([...reports, ...newreports])
     if(prevLen === 0)
       setCurrentReportName(newreports[0].fileName)
@@ -24,12 +25,6 @@ function App() {
   }
   function handleChange(row, col, e){
     const { value } = e.target 
-    // setCurrentReport({
-    //   ...currentReport,
-    //   data: currentReport.data.map( (rowVals, i) => 
-    //       (i === row ? {...rowVals, [col]: value }: rowVals )
-    //     )
-    // })
     const res = reports.map( r => r.fileName !== currentReportName ? r : {
       ...r, data: r.data.map( (rowVals, rowI) => rowI !== row ? rowVals : {
         ...rowVals, [col]:value

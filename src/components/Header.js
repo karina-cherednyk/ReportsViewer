@@ -55,7 +55,6 @@ const Header = ({currentReport, addReports}) => {
                 month: 'квітня',
                 year: parseInt(dateOld[2])
             }
-            report.faculty = report.faculty.split(' ')[1]
             report.eduYear = report.eduYear+''
             reports.push(report)
             if(reports.length === files.length)
