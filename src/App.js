@@ -27,8 +27,14 @@ function App() {
       rowData: editRowData
     })
   }
+
+
   function stopEditRow(){
-    if(editData == {}) return 
+    if(editData === {}) return 
+    if(editData.fileName !== currentReportName){
+      setEditData({})
+      return 
+    }
     const res = reports.map( r => r.fileName !== currentReportName ? r : {
       ...r, 
       data: r.data.map( (rowVals, rowI) => rowI !== editData.row ? rowVals : editData.rowData)
@@ -37,12 +43,25 @@ function App() {
     setReports(res)
     setEditData({})
   }
+
+
+
   function studentRowChange(row, col, val){
     setEditData({
       ...editData,
       rowData: { ...editData.rowData, [col]: val } 
     })
   }
+
+  function reportRowChange(label, val){
+    const res = reports.map( r => r.fileName !== currentReportName ? r : {
+      ...r, 
+      [label]:val
+    })
+    
+    setReports(res)
+  }
+
 
   return (
     <div className="App">
@@ -53,11 +72,9 @@ function App() {
       <VerticalTab 
           reports={reports} 
           currentReportName={currentReportName} 
-          setCurrentReportName={setCurrentReportName}
-          startEditRow ={startEditRow}
-          stopEditRow={stopEditRow}
-          editData={editData}
-          studentRowChange={studentRowChange }
+          {
+            ...{ reportRowChange, setCurrentReportName, startEditRow, stopEditRow, editData, studentRowChange }
+          }
           
           />
     </div>

@@ -1,4 +1,4 @@
-import { Table, TableBody, TableHead, TableCell, TableRow, TextField } from '@material-ui/core';
+import { Table, TableBody, TableHead, TableCell, TableRow, TextField, Typography } from '@material-ui/core';
 import  EditIcon  from '@material-ui/icons/Edit'
 import  CheckIcon  from '@material-ui/icons/Check'
 
@@ -10,13 +10,16 @@ const row = ({x,i,headers, report, startEditRow, stopEditRow, editData, studentR
         <TableRow key={`tr-${i}`}>
         { headers.map((y,k) => 
             <TableCell key={`trc-${k}`}>
-                { editing ?
+                { k !== 0 && editing ?
                 (<TextField 
                     name={y.prop}
-                    onChange={ e => studentRowChange(i, y.prop, e.target.value)}
+                    onChange={ e => {
+                        studentRowChange(i, y.prop, e.target.value)
+                        e.target.style.color='darkolivegreen'
+                    }}
                     value={editData.rowData[y.prop]}
                 />) :
-                ( x[y.prop] )
+                    (  <Typography variant="overline" >{ x[y.prop] } </Typography> )
                 }
                 </TableCell>
         ) }

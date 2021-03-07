@@ -44,7 +44,7 @@ const VerticalTab = ({
         currentReportName, 
         setCurrentReportName,
         stopEditRow,
-        ...tableMethods
+        ...reportMethods
       }) => {
   const classes = useStyles();
 
@@ -77,7 +77,7 @@ const VerticalTab = ({
       { 
         reports.map((x,i) => 
           <TabPanel key={`rep-tabpan-${i}`} currentReportName={currentReportName} report={x} 
-          child={  <FullReport report={x} stopEditRow={stopEditRow} {...tableMethods} />  } />
+          child={  <FullReport report={x} stopEditRow={stopEditRow} {...reportMethods} />  } />
         )      
       }
 
