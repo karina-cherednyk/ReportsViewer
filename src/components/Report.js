@@ -1,19 +1,6 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles';
-import { Box, TextField, Paper, Typography } from "@material-ui/core";
+import { Box, TextField,  Typography } from "@material-ui/core";
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import GradesTable from './GradesTable';
-
-
-const useStyles = makeStyles((theme) => ({
-    body: {
-        margin: theme.spacing(5),
-        padding: theme.spacing(3),
-        border: `5px solid ${theme.palette.secondary.dark}`,
-        textAlign: 'center'
-    }
-
-}));
 
 const monthes = [
   'грудня', 'січня', 'лютого', 
@@ -30,7 +17,7 @@ const options = ({ label, value, error, model }) => {
       value={value}
       key={`model-${++count}`}
       options={model}
-      style={{padding: 3, width: "25vw"}}
+      style={{padding: 3, width: "20vw"}}
       renderInput={(params) => <TextField  
                                   error={error != undefined }
                                   helperText={error}
@@ -42,15 +29,8 @@ const options = ({ label, value, error, model }) => {
 }
 
 const tf = ({text, defVal, error, other}) =>  {
-      let s, o
-      if(other && other.style){
-        let { style, ...otherOpts } = other
-        s = style; o = otherOpts
-      }
-      else {
-        s = {padding: 3, width: "25vw"}
-        o = other 
-      }
+      let s = other && other.fullWidth ?  {padding: 3} : 
+                                          {padding: 3, width: "fit-content"}
       return (
           <TextField  
           error={error != undefined}
@@ -58,19 +38,15 @@ const tf = ({text, defVal, error, other}) =>  {
           key={`tf-${++count}`} 
           defaultValue={defVal}
           margin="dense" style={s} 
-          label={text} variant="outlined" {...o } />
+          label={text} variant="outlined" {...other } />
       )
 }
 let count = 0;
 
 
-const Report = ({ 
-        report,
-        ...tableMethods
-       }) => {
-    const c = useStyles()
+const Report = React.memo(({ report }) => {
     return (
-        <Paper elevation={5} className={c.body}>
+        <>
           { label("НАЦІОНАЛЬНИЙ УНІВЕРСИТЕТ “КИЄВО-МОГИЛЯНСЬКА АКАДЕМІЯ”") }
           { label(`ЗАЛІКОВО-ЕКЗАМЕНАЦІЙНА ВІДОМІСТЬ № ${report.sheetCode}`, report.sheetCodeError )  }
           { row([ options({ label: "Освітній рівень", 
@@ -94,7 +70,8 @@ const Report = ({
           }
           { row( [ tf({ text: "Дисципліна", 
                         defVal: report.subject, 
-                        error: report.subjectError})] ) }
+                        error: report.subjectError,
+                        other: {fullWidth: true}})] ) }
           {
           row([
                 options({ label: "Семестр", 
@@ -145,10 +122,8 @@ const Report = ({
                 other: { fullWidth: true}})
         ])
         }  
-        <GradesTable  report={report} {...tableMethods} />
-
-        </Paper>
+        </>
     )
-}
+})
 
 export default Report

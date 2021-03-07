@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Report from './Report'
+import FullReport from './FullReport'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -77,7 +77,7 @@ const VerticalTab = ({
       { 
         reports.map((x,i) => 
           <TabPanel key={`rep-tabpan-${i}`} currentReportName={currentReportName} report={x} 
-          child={  <Report report={x} stopEditRow={stopEditRow} {...tableMethods} />  } />
+          child={  <FullReport report={x} stopEditRow={stopEditRow} {...tableMethods} />  } />
         )      
       }
 
