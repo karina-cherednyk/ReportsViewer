@@ -3,7 +3,7 @@ import  EditIcon  from '@material-ui/icons/Edit'
 import  CheckIcon  from '@material-ui/icons/Check'
 
 
-const row = (x,i,headers, report, startEditing, stopEditing, editData, handleChange) => {
+const row = (x,i,headers, report, startEditRow, stopEditRow, editData, studentRowChange) => {
     const editing = editData.row === i && editData.fileName === report.fileName
 
     return (
@@ -13,15 +13,15 @@ const row = (x,i,headers, report, startEditing, stopEditing, editData, handleCha
                 { editing ?
                 (<TextField 
                     name={y.prop}
-                    onChange={ e => handleChange(i, y.prop, e)}
-                    value={x[y.prop]}
+                    onChange={ e => studentRowChange(i, y.prop, e.target.value)}
+                    value={editData.rowData[y.prop]}
                 />) :
                 ( x[y.prop] )
                 }
                 </TableCell>
         ) }
         <TableCell>
-            { editing ? (<CheckIcon onClick={() => stopEditing()}/>): (<EditIcon onClick={() => startEditing(i)}/>) }
+            { editing ? (<CheckIcon onClick={() => stopEditRow()}/>): (<EditIcon onClick={() => startEditRow(i)}/>) }
         </TableCell>
         </TableRow>
     )
@@ -30,10 +30,10 @@ const row = (x,i,headers, report, startEditing, stopEditing, editData, handleCha
 const headers = require('./headers.json')
 const GradesTable = ({
             report,
-            startEditing,
-            stopEditing,
+            startEditRow,
+            stopEditRow,
             editData,
-            handleChange
+            studentRowChange
         }) => {
     return (
         <Table>
@@ -46,7 +46,7 @@ const GradesTable = ({
         } 
         </TableRow></TableHead>
         <TableBody>
-        { report.data.map((x,i) => row(x, i, headers, report, startEditing, stopEditing, editData, handleChange) )  }
+        { report.data.map((x,i) => row(x, i, headers, report, startEditRow, stopEditRow, editData, studentRowChange) )  }
         </TableBody>
         </Table>
     )

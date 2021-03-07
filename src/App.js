@@ -16,21 +16,32 @@ function App() {
       setCurrentReportName(newreports[0].fileName)
   }
 
+  function startEditRow(row) {
+    const editRowData =  reports
+                          .find(r => r.fileName === currentReportName)
+                          .data[row]
 
-  function startEditing(row) {
-    setEditData({row: row, fileName:currentReportName})
+    setEditData({
+      row: row, 
+      fileName:currentReportName,
+      rowData: editRowData
+    })
   }
-  function stopEditing(){
+  function stopEditRow(){
+    if(editData == {}) return 
+    const res = reports.map( r => r.fileName !== currentReportName ? r : {
+      ...r, 
+      data: r.data.map( (rowVals, rowI) => rowI !== editData.row ? rowVals : editData.rowData)
+    })
+    
+    setReports(res)
     setEditData({})
   }
-  function handleChange(row, col, e){
-    const { value } = e.target 
-    const res = reports.map( r => r.fileName !== currentReportName ? r : {
-      ...r, data: r.data.map( (rowVals, rowI) => rowI !== row ? rowVals : {
-        ...rowVals, [col]:value
-      })
+  function studentRowChange(row, col, val){
+    setEditData({
+      ...editData,
+      rowData: { ...editData.rowData, [col]: val } 
     })
-    setReports(res)
   }
 
   return (
@@ -43,10 +54,10 @@ function App() {
           reports={reports} 
           currentReportName={currentReportName} 
           setCurrentReportName={setCurrentReportName}
-          startEditing={startEditing}
-          stopEditing={stopEditing}
+          startEditRow ={startEditRow}
+          stopEditRow={stopEditRow}
           editData={editData}
-          handleChange={handleChange}
+          studentRowChange={studentRowChange }
           
           />
     </div>

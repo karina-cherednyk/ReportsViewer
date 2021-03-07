@@ -43,11 +43,13 @@ const VerticalTab = ({
         reports, 
         currentReportName, 
         setCurrentReportName,
+        stopEditRow,
         ...tableMethods
       }) => {
   const classes = useStyles();
 
   const handleTabChange = (event, i) => {
+    stopEditRow()
     setCurrentReportName(reports[i].fileName);
   };
 
@@ -75,7 +77,7 @@ const VerticalTab = ({
       { 
         reports.map((x,i) => 
           <TabPanel key={`rep-tabpan-${i}`} currentReportName={currentReportName} report={x} 
-          child={  <Report report={x} {...tableMethods} />  } />
+          child={  <Report report={x} stopEditRow={stopEditRow} {...tableMethods} />  } />
         )      
       }
 
