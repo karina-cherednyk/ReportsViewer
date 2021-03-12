@@ -1,0 +1,98 @@
+[
+    {
+        "type": "label",
+        "label": "НАЦІОНАЛЬНИЙ УНІВЕРСИТЕТ “КИЄВО-МОГИЛЯНСЬКА АКАДЕМІЯ”"
+    },
+    {
+        "type": "label",
+        "label": "ЗАЛІКОВО-ЕКЗАМЕНАЦІЙНА ВІДОМІСТЬ №",
+        "valueFrom": "sheetCode"
+    },
+    [
+        {
+            "type": "options",
+            "label": "Освітній рівень",
+            "valueFrom": "okr",
+            "model": ["Бакалавр", "Магістр"]
+        }
+    ],
+    [
+        {
+            "type": "options",
+            "label": "Факультет",
+            "valueFrom": "faculty",
+            "model": ["інформатики", "фізики"]
+        },
+        {
+            "type": "options",
+            "label": "Рік навчання",
+            "valueFrom": "eduYear",
+            "model": ["1", "2", "3", "4", "5", "6"] 
+        }
+    ],
+    [
+        {
+            "type": "input",
+            "label": "Дисципліна",
+            "valueFrom": "subject"
+        }
+    ],
+    [
+        {
+            "type": "options",
+            "label": "Семестр",
+            "valueFrom": "term",
+            "model": ["1", "2", "3", "4", "4д"]
+        },
+        {
+            "type": "input",
+            "label": "Залікові бали",
+            "valueFrom": "creditPoints",
+            "other": {"type": "number"}
+        }
+    ],
+    [
+        {
+            "type": "options",
+            "label": "Форма контролю",
+            "valueFrom": "controlForm",
+            "model": ["залік", "екзамен"]
+        },
+        [
+            {
+                "type": "input",
+                "label": "День",
+                "valueFrom": "date.day",
+                "other": {"type": "number"}
+            },
+            {
+                "type": "options",
+                "label": "Місяць",
+                "valueFrom": "date.month",
+                "model": [  "грудня", "січня", "лютого", 
+                            "березня", "квітня", "травня",
+                            "червня", "липня", "серпня"]
+            },
+            {
+                "type": "input",
+                "label": "Рік",
+                "valueFrom": "date.year",
+                "other": {"type": "number"}
+            }
+        ]
+    ],
+    [
+        {
+            "type": "input",
+            "label": "Прізвище, ім’я, по батькові екзаменатора",
+            "valueFrom": "teacherName",
+            "other": {"fullWidth": true}
+        },
+        {
+            "type": "input",
+            "label": "Вчене звання",
+            "valueFrom": "teacherRank",
+            "other": {"fullWidth": true}
+        }
+    ]
+]
